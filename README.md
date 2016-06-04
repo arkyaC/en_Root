@@ -1,3 +1,2 @@
 # en_Root
-Code I wrote using Root (for summer project)  
-will be updating as and when I write more code
+Code written using CERN's Root v6 (for summer project)
