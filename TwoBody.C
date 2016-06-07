@@ -44,7 +44,7 @@ void TwoBody(){
 	TRandom3* rndgen=new TRandom3();
 	float ps_rapid,pT;
 	
-	for(int i=0;i<5000;i++){
+	for(int i=0;i<50000;i++){
 		ps_rapid=rndgen->Gaus(0.,3);
 		pT=100*rndgen->Exp(2000.);
 		float theta_mother=2*atan(exp(-1*ps_rapid));
