@@ -1,6 +1,7 @@
 #define M 1019.445
 #define m 493.667
 #define pi 3.141592653589
+#define n_bins 200
 void init(TCanvas* canv){
 	canv->Divide(1,3);
 	canv->cd(1);
@@ -21,23 +22,23 @@ void Decay_2particle(){
 	init(canv3);
 	init(canv4);
 	
-	TH1F* par1_E=new TH1F("particle_1_E","particle 1",200,350.,1600.);
-	TH1F* par2_E=new TH1F("particle_2_E","particle 2",200,350.,1600.);
-	TH1F* mother_E=new TH1F("mother_E","mother particle",200,350.,1600.);
-	TH1F* par1_px=new TH1F("particle_1_px","particle 1",200,-700.,700.);
-	TH1F* par2_px=new TH1F("particle_2_px","particle 2",200,-700.,700.);
-	TH1F* mother_px=new TH1F("mother_px","mother particle",200,0.,800.);
-	TH1F* par1_py=new TH1F("particle_1_py","particle 1",200,-700.,700.);
-	TH1F* par2_py=new TH1F("particle_2_py","particle 2",200,-700.,700.);
-	TH1F* mother_py=new TH1F("mother_py","mother particle",200,0.,800.);
-	TH1F* par1_pz=new TH1F("particle_1_pz","particle 1",200,-700.,700.);
-	TH1F* par2_pz=new TH1F("particle_2_pz","particle 2",200,-700.,700.);
-	TH1F* mother_pz=new TH1F("mother_pz","mother particle",200,0.,1400.);
+	TH1F* par1_E=new TH1F("particle_1_E","particle 1",n_bins,350.,1600.);
+	TH1F* par2_E=new TH1F("particle_2_E","particle 2",n_bins,350.,1600.);
+	TH1F* mother_E=new TH1F("mother_E","mother particle",n_bins,350.,1600.);
+	TH1F* par1_px=new TH1F("particle_1_px","particle 1",n_bins,-700.,700.);
+	TH1F* par2_px=new TH1F("particle_2_px","particle 2",n_bins,-700.,700.);
+	TH1F* mother_px=new TH1F("mother_px","mother particle",n_bins,-800.,800.);
+	TH1F* par1_py=new TH1F("particle_1_py","particle 1",n_bins,-700.,700.);
+	TH1F* par2_py=new TH1F("particle_2_py","particle 2",n_bins,-700.,700.);
+	TH1F* mother_py=new TH1F("mother_py","mother particle",n_bins,-800.,800.);
+	TH1F* par1_pz=new TH1F("particle_1_pz","particle 1",n_bins,-700.,700.);
+	TH1F* par2_pz=new TH1F("particle_2_pz","particle 2",n_bins,-700.,700.);
+	TH1F* mother_pz=new TH1F("mother_pz","mother particle",n_bins,-2000.,2000.);
 	
 	TRandom3* rndgen=new TRandom3();
 	float ps_rapid,pT;
 	
-	for(int i=0;i<10000000;i++){
+	for(int i=0;i<1000000;i++){
 		if(i%100==0)cout<<i<<endl;
 		ps_rapid=rndgen->Gaus(0.,3);
 		pT=100*rndgen->Exp(2000.);
