@@ -42,7 +42,7 @@ void Decay_2particle(){
 		ps_rapid=rndgen->Gaus(0.,3);
 		pT=100*rndgen->Exp(2000.);
 		float theta_mother=2*atan(exp(-1*ps_rapid));
-		float p_mother=pT*tan(theta_mother);
+		float p_mother=pT/sin(theta_mother);
 		float E=sqrt(p_mother*p_mother+M*M);
 
 		float beta=p_mother/E;
