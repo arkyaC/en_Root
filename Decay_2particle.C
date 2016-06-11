@@ -4,9 +4,9 @@
 #define pi 3.141592653589
 
 void Decay_2particle(){
-	TFile ofile("decay_data_phi.root","RECREATE");
-	TNtuple decay_data("decay_data","phi decay data","px:py:pz:En");
-	TNtuple mother_data("mother_data","phi mother data","px:py:pz:En");
+	TFile* ofile=TFile::Open("decay_data_phi.root","RECREATE");
+	TNtuple* decay_data=new TNtuple("decay_data","phi decay data","px:py:pz:En");
+	TNtuple* mother_data=new TNtuple("mother_data","phi mother data","px:py:pz:En");
 	TRandom3* rndgen=new TRandom3();
 	float ps_rapid,pT;
 	
@@ -15,7 +15,7 @@ void Decay_2particle(){
 		int N=(int)(rndgen->Gaus(5,2));//number of phi particles
 		if(i%10000==0) cout<<N<<endl;
 
-		for(int i=1;i<=N;i++){
+		for(int j=1;j<=N;j++){
 			ps_rapid=rndgen->Gaus(0.,3);//pseudorapidity (gaussian) of mother
 			pT=0.01*(rndgen->Exp(2000.));//transverse momentum of mother
 			float theta_mother=2*atan(exp(-1*ps_rapid));
@@ -58,12 +58,13 @@ void Decay_2particle(){
 		    //testing momentum and energy conservation at an interval
 		    //if(i%10000==0) cout<<Px1+Px2-px_m<<" "<<Py1+Py2-py_m<<" "<<Pz1+Pz2-pz_m<<" "<<E1+E2-E<<endl;
 
-			decay_data.Fill(Px1,Py1,Pz1,E1);
-			decay_data.Fill(Px2,Py2,Pz2,E2);
-			mother_data.Fill(px_m,py_m,pz_m,E);
+			decay_data->Fill(Px1,Py1,Pz1,E1);
+			decay_data->Fill(Px2,Py2,Pz2,E2);
+			mother_data->Fill(px_m,py_m,pz_m,E);
 		}
 	}
-	decay_data.Write();
-	mother_data.Write();
-	ofile.Close();
+	decay_data->Write();
+	mother_data->Write();
+	delete ofile;
+	delete rndgen;
 }

@@ -16,10 +16,12 @@ void read_Decay_2_particle(){
 	TNtuple* mother_data;
 	in_file.GetObject("decay_data",phi_data);
 	in_file.GetObject("mother_data",mother_data);
-	auto canv1=new TCanvas("p_x","p_x",900,900);
-	auto canv2=new TCanvas("p_y","p_y",900,900);
-	auto canv3=new TCanvas("p_z","p_z",900,900);
-	auto canv4=new TCanvas("E","E",900,900);
+	gROOT->cd();
+
+	TCanvas* canv1=new TCanvas("p_x","p_x",900,900);
+	TCanvas* canv2=new TCanvas("p_y","p_y",900,900);
+	TCanvas* canv3=new TCanvas("p_z","p_z",900,900);
+	TCanvas* canv4=new TCanvas("E","E",900,900);
 	init(canv1);
 	init(canv2);
 	init(canv3);
@@ -44,7 +46,7 @@ void read_Decay_2_particle(){
 		phi_data->GetEntry(i);
 		row_content=phi_data->GetArgs();
 		if(i%2==0){
-			cout<<row_content[0]<<endl;
+			//cout<<row_content[0]<<endl;
 		    par1_px->Fill(row_content[0]);
 		    par1_py->Fill(row_content[1]);
 		    par1_pz->Fill(row_content[2]);
@@ -91,8 +93,8 @@ void read_Decay_2_particle(){
 	canv4->cd(3);
 	mother_E->Draw();
 
-	canv1->Modified();
-	canv2->Modified();
-	canv3->Modified();
-	canv4->Modified();
+	canv1->cd(0);canv1->Modified();canv1->Update();
+	canv2->cd(0);canv2->Modified();canv2->Update();
+	canv3->cd(0);canv3->Modified();canv3->Update();
+	canv4->cd(0);canv4->Modified();canv4->Update();
 }
