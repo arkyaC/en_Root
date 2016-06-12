@@ -17,7 +17,7 @@ void Decay_2particle(){
 
 		for(int j=1;j<=N;j++){
 			ps_rapid=rndgen->Gaus(0.,3);//pseudorapidity (gaussian) of mother
-			pT=0.01*(rndgen->Exp(2000.));//transverse momentum of mother
+			pT=100*(rndgen->Exp(2000.));//transverse momentum of mother
 			float theta_mother=2*atan(exp(-1*ps_rapid));
 			float p_mother=pT/sin(theta_mother);
 			float E=sqrt(p_mother*p_mother+M*M);

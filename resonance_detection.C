@@ -1,5 +1,5 @@
-//not working
-#define n_bins 1000
+
+#define n_bins 300
 
 void resonance_detection(){
 	TFile in_file("decay_data_phi.root");
@@ -9,7 +9,7 @@ void resonance_detection(){
 
 	TCanvas* canv=new TCanvas("reso_mass","mass distribution of mother particle;cross-section;mass (in MeV)",900,900);
 
-	TH1F* mass=new TH1F("mother_py","mother particle",n_bins,800.,2000.);
+	TH1F* mass=new TH1F("mother_py","mother particle",n_bins,0.,5000.);
 	cout<<"number of entries: "<<phi_data->GetEntries()<<endl;
 	int n=(int)((phi_data->GetEntries())/2);
 	//cout<<n<<endl;
