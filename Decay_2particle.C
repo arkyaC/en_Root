@@ -2,6 +2,7 @@
 #define m 493.667
 #define pi 3.141592653589
 #define n_bins 200
+
 void init(TCanvas* canv){
 	canv->Divide(1,3);
 	canv->cd(1);
@@ -39,9 +40,9 @@ void Decay_2particle(){
 	float ps_rapid,pT;
 	
 	for(int i=0;i<1000000;i++){
-		if(i%100==0)cout<<i<<endl;
+		//if(i%100==0)cout<<i<<endl;
 		ps_rapid=rndgen->Gaus(0.,3);
-		pT=100*rndgen->Exp(2000.);
+		pT=0.01*(rndgen->Exp(2000.));
 		float theta_mother=2*atan(exp(-1*ps_rapid));
 		float p_mother=pT/sin(theta_mother);
 		float E=sqrt(p_mother*p_mother+M*M);
@@ -53,28 +54,44 @@ void Decay_2particle(){
 		float phi=2*pi*rndgen->Uniform(0,1);
 		float phi_mother=2*pi*rndgen->Uniform(0,1);
 
-		mother_px->Fill(p_mother*sin(theta_mother)*cos(phi_mother));
-		mother_py->Fill(p_mother*sin(theta_mother)*sin(phi_mother));
-		mother_pz->Fill(p_mother*cos(theta_mother));
+		float px_m=p_mother*sin(theta_mother)*cos(phi_mother);
+		float py_m=p_mother*sin(theta_mother)*sin(phi_mother);
+		float pz_m=p_mother*cos(theta_mother);
 
 	    float beta_x = beta*sin(theta_mother)*cos(phi_mother);
 	    float beta_y = beta*sin(theta_mother)*sin(phi_mother);
 	    float beta_z = beta*cos(theta_mother);
+
 	    float px1=p*sin(theta)*cos(phi);
 	    float py1=p*sin(theta)*sin(phi);
 	    float pz1=p*cos(theta);
 
-	    par1_px->Fill((gamma-1)*((px1*beta_x*beta_x)/(beta*beta) + (py1*beta_x*beta_y)/(beta*beta) + (pz1*beta_x*beta_z)/(beta*beta))  +  px1  +  gamma*beta_x*(M/2));
-	    par1_py->Fill((gamma-1)*((px1*beta_y*beta_x)/(beta*beta) + (py1*beta_y*beta_y)/(beta*beta) + (pz1*beta_y*beta_z)/(beta*beta))  +  py1  +  gamma*beta_y*(M/2));
-	    par1_pz->Fill((gamma-1)*((px1*beta_z*beta_x)/(beta*beta) + (py1*beta_z*beta_y)/(beta*beta) + (pz1*beta_z*beta_z)/(beta*beta))  +  pz1  +  gamma*beta_z*(M/2));
-	    par1_E->Fill((gamma*(M/2))  +  gamma*((px1*beta_x) + (py1*beta_y) + (pz1*beta_z)));
+	    float Px1=(gamma-1)*((px1*beta_x*beta_x)/(beta*beta) + (py1*beta_x*beta_y)/(beta*beta) + (pz1*beta_x*beta_z)/(beta*beta))  +  px1  +  gamma*beta_x*(M/2);
+	    float Py1=(gamma-1)*((px1*beta_y*beta_x)/(beta*beta) + (py1*beta_y*beta_y)/(beta*beta) + (pz1*beta_y*beta_z)/(beta*beta))  +  py1  +  gamma*beta_y*(M/2);
+	    float Pz1=(gamma-1)*((px1*beta_z*beta_x)/(beta*beta) + (py1*beta_z*beta_y)/(beta*beta) + (pz1*beta_z*beta_z)/(beta*beta))  +  pz1  +  gamma*beta_z*(M/2);
+	    float E1=(gamma*(M/2))  +  gamma*((px1*beta_x) + (py1*beta_y) + (pz1*beta_z));
 	    px1=-px1;
 	    py1=-py1;
 	    pz1=-pz1;
-		par2_px->Fill((gamma-1)*((px1*beta_x*beta_x)/(beta*beta) + (py1*beta_x*beta_y)/(beta*beta) + (pz1*beta_x*beta_z)/(beta*beta))  +  px1  +  gamma*beta_x*(M/2));
-	    par2_py->Fill((gamma-1)*((px1*beta_y*beta_x)/(beta*beta) + (py1*beta_y*beta_y)/(beta*beta) + (pz1*beta_y*beta_z)/(beta*beta))  +  py1  +  gamma*beta_y*(M/2));
-	    par2_pz->Fill((gamma-1)*((px1*beta_z*beta_x)/(beta*beta) + (py1*beta_z*beta_y)/(beta*beta) + (pz1*beta_z*beta_z)/(beta*beta))  +  pz1  +  gamma*beta_z*(M/2));
-	    par2_E->Fill((gamma*(M/2))  +  gamma*((px1*beta_x) + (py1*beta_y) + (pz1*beta_z)));
+	    float Px2=(gamma-1)*((px1*beta_x*beta_x)/(beta*beta) + (py1*beta_x*beta_y)/(beta*beta) + (pz1*beta_x*beta_z)/(beta*beta))  +  px1  +  gamma*beta_x*(M/2);
+	    float Py2=(gamma-1)*((px1*beta_y*beta_x)/(beta*beta) + (py1*beta_y*beta_y)/(beta*beta) + (pz1*beta_y*beta_z)/(beta*beta))  +  py1  +  gamma*beta_y*(M/2);
+	    float Pz2=(gamma-1)*((px1*beta_z*beta_x)/(beta*beta) + (py1*beta_z*beta_y)/(beta*beta) + (pz1*beta_z*beta_z)/(beta*beta))  +  pz1  +  gamma*beta_z*(M/2);
+	    float E2=(gamma*(M/2))  +  gamma*((px1*beta_x) + (py1*beta_y) + (pz1*beta_z));
+
+	    //testing momentum and energy conservation at an interval
+	    if(i%10000==0) cout<<Px1+Px2-px_m<<" "<<Py1+Py2-py_m<<" "<<Pz1+Pz2-pz_m<<" "<<E1+E2-E<<endl;
+
+	    par1_px->Fill(Px1);
+	    par1_py->Fill(Py1);
+	    par1_pz->Fill(Pz1);
+	    par1_E->Fill(E1);
+		par2_px->Fill(Px2);
+	    par2_py->Fill(Py2);
+	    par2_pz->Fill(Pz2);
+	    par2_E->Fill(E2);
+	    mother_px->Fill(px_m);
+		mother_py->Fill(py_m);
+		mother_pz->Fill(pz_m);
 		mother_E->Fill(E);
 	}
 	canv1->cd(1);
