@@ -9,7 +9,7 @@ void resonance_detection(){
 
 	TCanvas* canv=new TCanvas("reso_mass","mass distribution of mother particle;cross-section;mass (in MeV)",900,900);
 
-	TH1F* mass=new TH1F("mother_py","mother particle",n_bins,0.,5000.);
+	TH1F* mass=new TH1F("mother_py","mother particle",n_bins,0.,10.);
 	cout<<"number of entries: "<<phi_data->GetEntries()<<endl;
 	int n=(int)((phi_data->GetEntries())/2);
 	//cout<<n<<endl;

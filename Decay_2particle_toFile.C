@@ -1,9 +1,9 @@
 
-#define M 1019.445
-#define m 493.667
+#define M 1.019445
+#define m .493667
 #define pi 3.141592653589
 
-void Decay_2particle(){
+void Decay_2particle_toFile(){
 	TFile* ofile=TFile::Open("decay_data_phi.root","RECREATE");
 	TNtuple* decay_data=new TNtuple("decay_data","phi decay data","px:py:pz:En");
 	TNtuple* mother_data=new TNtuple("mother_data","phi mother data","px:py:pz:En");
@@ -17,7 +17,7 @@ void Decay_2particle(){
 
 		for(int j=1;j<=N;j++){
 			ps_rapid=rndgen->Gaus(0.,3);//pseudorapidity (gaussian) of mother
-			pT=100*(rndgen->Exp(2000.));//transverse momentum of mother
+			pT=10000*(rndgen->Exp(2.));//transverse momentum of mother
 			float theta_mother=2*atan(exp(-1*ps_rapid));
 			float p_mother=pT/sin(theta_mother);
 			float E=sqrt(p_mother*p_mother+M*M);
