@@ -115,8 +115,10 @@ void resonance(){
 			inv_mass->Fill(sqrt((E*E) - (px*px) - (py*py) - (pz*pz)));
 		}	
 	}
-	canv1->cd(1);
-	inv_mass->Draw();
+	//canv1->cd(0);
+	inv_mass->DrawNormalized();
+	canv1->Modified();
+	canv1->update();
 	/*canv1->cd(1);
 	par1_px->Draw();
 	canv1->cd(2);
