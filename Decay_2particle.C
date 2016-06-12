@@ -1,4 +1,4 @@
-//not working
+
 #define M 1019.445
 #define m 493.667
 #define pi 3.141592653589
@@ -10,10 +10,10 @@ void Decay_2particle(){
 	TRandom3* rndgen=new TRandom3();
 	float ps_rapid,pT;
 	
-	for(int i=0;i<1000000;i++){
+	for(int i=0;i<10000;i++){
 		//if(i%1000==0)cout<<i<<endl;
 		int N=(int)(rndgen->Gaus(5,2));//number of phi particles
-		if(i%10000==0) cout<<N<<endl;
+		if(i%1000==0) cout<<N<<endl;
 
 		for(int j=1;j<=N;j++){
 			ps_rapid=rndgen->Gaus(0.,3);//pseudorapidity (gaussian) of mother
