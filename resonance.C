@@ -39,19 +39,19 @@ void resonance(){
 	*/
 	auto canv1=new TCanvas("inv_mass","inv_mass",900,900);
 	TH1F* inv_mass=new TH1F("inv_mass","inv_mass",n_bins,0,10);
-	TRandom3* rndgen=new TRandom3();
+	TRandom3* rndgen=new TRandom3();.
 	float ps_rapid,pT;
 	float** p_1;
 	float** p_2;
-	p_1=new float*[1000];
-	p_2=new float*[1000];
-	for(int i=0;i<1000;i++){
+	p_1=new float*[200];
+	p_2=new float*[200];
+	for(int i=0;i<200;i++){
 		p_1[i]=new float[4];
 		p_2[i]=new float[4];
 	}
-	for(int i=0;i<1000;i++){
+	for(int i=0;i<200;i++){
 		ps_rapid=rndgen->Gaus(0.,3);
-		pT=0.1*rndgen->Exp(2.);
+		pT=rndgen->Exp(2.);
 		float theta_mother=2*atan(exp(-1*ps_rapid));
 		float p_mother=pT/sin(theta_mother);
 		float E=sqrt(p_mother*p_mother+M*M);
@@ -105,8 +105,8 @@ void resonance(){
 		p_2[i][2]=pz2_lab;
 		p_2[i][3]=E2_lab;
 	}
-	for(int i=0; i<1000; i++){
-		for(int j=0; j<5; j++){
+	for(int i=0; i<200; i++){
+		for(int j=0; j<200; j++){
 			float px=p_1[i][0] + p_2[j][0];
 			float py=p_1[i][1] + p_2[j][1];
 			float pz=p_1[i][2] + p_2[j][2];
