@@ -72,7 +72,7 @@ void resonance_detection(){
 		}
 	}
 
-	mass->Draw();
+	mass->DrawNormalized();
 	/*canv->cd(0);*/canv->Modified();canv->Update();
 	//canv->Modified();
 	/*for(int i=0;i<n;i++){
