@@ -49,7 +49,7 @@ void TwoBody(){
 		pT=100*rndgen->Exp(2000.);
 		float theta_mother=2*atan(exp(-1*ps_rapid));
 		float phi_mother=2*pi*rndgen->Uniform(0,1);
-		float p_mother=pT*tan(theta_mother);
+		float p_mother=pT/sin(theta_mother);
 		float E=sqrt(p_mother*p_mother+M*M);
 		float beta=p_mother/E;
 		float gamma=1./sqrt(1-beta*beta);
@@ -64,16 +64,16 @@ void TwoBody(){
 		float py1=p*sin(theta)*sin(phi);
 		float pz1=p*cos(theta);
 		par1_px->Fill((gamma-1)*(px1*beta_x*beta_x/(beta*beta) + py1*beta_y*beta_x/(beta*beta) + pz1*beta_z*beta_x/(beta*beta)) + px1 + gamma*beta_x*M/2);
-		par1_py->Fill((gamma-1)*(px1*beta_x*beta_y/(beta*beta) + py1*beta_y*beta_y/(beta*beta) + pz1*beta_z*beta_y/(beta*beta)) + px1 + gamma*beta_y*M/2);
-		par1_pz->Fill((gamma-1)*(px1*beta_x*beta_z/(beta*beta) + py1*beta_y*beta_z/(beta*beta) + pz1*beta_z*beta_z/(beta*beta)) + px1 + gamma*beta_z*M/2);
-		par1_E->Fill(gamma*(M/2+beta_x*px1+beta_y*py1+beta_z*pz1));
+		par1_py->Fill((gamma-1)*(px1*beta_x*beta_y/(beta*beta) + py1*beta_y*beta_y/(beta*beta) + pz1*beta_z*beta_y/(beta*beta)) + py1 + gamma*beta_y*M/2);
+		par1_pz->Fill((gamma-1)*(px1*beta_x*beta_z/(beta*beta) + py1*beta_y*beta_z/(beta*beta) + pz1*beta_z*beta_z/(beta*beta)) + pz1 + gamma*beta_z*M/2);
+		par1_E->Fill(gamma*(M/2 + beta_x*px1 + beta_y*py1 + beta_z*pz1));
 		px1=-px1;
 		py1=-py1;
 		pz1=-pz1;
-		par2_px->Fill((gamma-1)*(px1*beta_x*beta_x/(beta*beta)+py1*beta_y*beta_x/(beta*beta)+pz1*beta_z*beta_x/(beta*beta))+px1-gamma*beta_x*M/2);
-		par2_py->Fill((gamma-1)*(px1*beta_x*beta_y/(beta*beta) + py1*beta_y*beta_y/(beta*beta) + pz1*beta_z*beta_y/(beta*beta)) + px1 + gamma*beta_y*M/2);
-		par2_pz->Fill((gamma-1)*(px1*beta_x*beta_z/(beta*beta) + py1*beta_y*beta_z/(beta*beta) + pz1*beta_z*beta_z/(beta*beta)) + px1 + gamma*beta_z*M/2);
-		par2_E->Fill(gamma*(M/2+beta_x*px1+beta_y*py1+beta_z*pz1));
+		par2_px->Fill((gamma-1)*(px1*beta_x*beta_x/(beta*beta) + py1*beta_y*beta_x/(beta*beta) + pz1*beta_z*beta_x/(beta*beta)) + px1 + gamma*beta_x*M/2);
+		par2_py->Fill((gamma-1)*(px1*beta_x*beta_y/(beta*beta) + py1*beta_y*beta_y/(beta*beta) + pz1*beta_z*beta_y/(beta*beta)) + py1 + gamma*beta_y*M/2);
+		par2_pz->Fill((gamma-1)*(px1*beta_x*beta_z/(beta*beta) + py1*beta_y*beta_z/(beta*beta) + pz1*beta_z*beta_z/(beta*beta)) + pz1 + gamma*beta_z*M/2);
+		par2_E->Fill(gamma*(M/2 + beta_x*px1 + beta_y*py1 + beta_z*pz1));
 		mother_E->Fill(E);
 	}
 
