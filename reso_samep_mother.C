@@ -3,9 +3,9 @@
 #define m3 .23033
 #define pi 3.141592653589
 #define n_bins 150
-void resonance_correct(){
+void reso_samep_mother(){
 	auto canv1=new TCanvas("inv_mass","inv_mass",900,900);
-	TH1F* inv_mass=new TH1F("inv_mass","inv_mass",n_bins,0,50);
+	TH1F* inv_mass=new TH1F("inv_mass","inv_mass",n_bins,0,100);
 	TRandom3* rndgen=new TRandom3();
 	float ps_rapid,pT;
 	float** p_1;
@@ -17,10 +17,11 @@ void resonance_correct(){
 		p_2[i]=new float[4];
 	}
 	for(int i=0; i<1000; i++){
-		for(int j=0; j<5; j++){
 		ps_rapid=rndgen->Gaus(0.,3);
 		pT=10*rndgen->Exp(2.);
 		float theta_mother=2*atan(exp(-1*ps_rapid));
+		for(int j=0; j<5; j++){
+		
 		float p_mother=pT/sin(theta_mother);
 		float E=sqrt(p_mother*p_mother+M*M);
 		float beta=p_mother/E;
