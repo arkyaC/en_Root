@@ -1,9 +1,10 @@
-#define M 1019.445
-#define m 493.667
-#define m3 230.33
+#define M 1.019445
+#define m .493667
+#define m3 .23033
 #define pi 3.141592653589
 #define n_bins 200
-void init(TCanvas* canv){
+#define n 10000
+/*void init(TCanvas* canv){
 	canv->Divide(1,3);
 	canv->cd(1);
 	gPad->SetTitle("particle 1");
@@ -11,7 +12,7 @@ void init(TCanvas* canv){
 	gPad->SetTitle("particle 2");
 	canv->cd(3);
 	gPad->SetTitle("mother");
-}
+}*/
 void Threebodyviatwobody(){
 
 	/*auto canv1=new TCanvas("p_x","p_x",900,900);
@@ -38,10 +39,11 @@ void Threebodyviatwobody(){
 	*/
 	TRandom3* rndgen=new TRandom3();
 	float ps_rapid,pT;
+	float x[n],y[n];
 	
-	for(int i=0;i<10;i++){
+	for(int i=0;i<n;i++){
 		ps_rapid=rndgen->Gaus(0.,3);
-		pT=rndgen->Exp(2000.);
+		pT=0.2 + rndgen->Exp(0.5);
 		float theta_mother=2*atan(exp(-1*ps_rapid));
 		float p_mother=pT/sin(theta_mother);
 		float E=sqrt(p_mother*p_mother+M*M);
@@ -109,12 +111,25 @@ void Threebodyviatwobody(){
 		float px4_lab=(gamma3-1)*((p3x*beta3_x*beta3_x)/(beta3*beta3) + (p3y*beta3_x*beta3_y)/(beta3*beta3) + (p3z*beta3_x*beta3_z)/(beta3*beta3))  +  p3x  +  gamma3*beta3_x*(m/2);
 		float py4_lab=(gamma3-1)*((p3x*beta3_y*beta3_x)/(beta3*beta3) + (p3y*beta3_y*beta3_y)/(beta3*beta3) + (p3z*beta3_y*beta3_z)/(beta3*beta3))  +  p3y  +  gamma3*beta3_y*(m/2);
 		float pz4_lab=(gamma3-1)*((p3x*beta3_z*beta3_x)/(beta3*beta3) + (p3y*beta3_z*beta3_y)/(beta3*beta3) + (p3z*beta3_z*beta3_z)/(beta3*beta3))  +  p3z  +  gamma3*beta3_z*(m/2);
-		float E3_lab=(gamma3*(m/2))  +  gamma3*((p3x*beta3_x) + (p3y*beta3_y) + (p3z*beta3_z));
+		float E4_lab=(gamma3*(m/2))  +  gamma3*((p3x*beta3_x) + (p3y*beta3_y) + (p3z*beta3_z));
 		float px_sum=px2_lab + px3_lab + px4_lab;
 		float py_sum=py2_lab + py3_lab + py4_lab;
 		float pz_sum=pz2_lab + pz3_lab + pz4_lab;
+		float p23x=px2_lab + px3_lab;
+		float p23y=py2_lab + py3_lab;
+		float p23z=pz2_lab + pz3_lab;
+		float E23=E2_lab + E3_lab;
+		float p24x=px4_lab + px2_lab;
+		float p24y=py4_lab + py2_lab;
+		float p24z=pz4_lab + pz2_lab;
+		float E24=E2_lab + E4_lab;
+		x[i]=(E23)*(E23) - (p23x)*(p23x) - (p23y)*(p23y) - (p23z)*(p23z);
+		y[i]=(E24)*(E24) - (p24x)*(p24x) - (p24y)*(p24y) - (p24z)*(p24z);
 		cout<<px_sum<<"="<<px_mother<<"   ,   "<<py_sum<<"="<<py_mother<<"   ,   "<<pz_sum<<"="<<pz_mother<<"   ,   "<<endl<<endl<<endl;
 	}
+	TGraph* dalitz=new TGraph(1000,x,y);
+	TCanvas* can=new TCanvas("dalitz","dalitz",1500,700);
+	dalitz->Draw("A*");
 	/*canv1->cd(1);
 	par1_px->Draw();
 	canv1->cd(2);
