@@ -46,9 +46,7 @@ void resonance_detection(){
 		}
 	}
 
-	//delete[] row_content;
 	cout<<"stored values"<<endl<<endl;
-	//float* row_content;
 	int event_ctr=0;
 	for(int i=0;i<event_data->GetEntries();i++){
 		event_data->GetEntry(i);
@@ -79,40 +77,9 @@ void resonance_detection(){
 		}
 		event_ctr+=n_events;
 	}
-	/*
-	for(int i=0;i<n;i++){
-		//if (i%10000==0) cout<<i<<endl;
-		px1=k_plus[i][0];
-		py1=k_plus[i][1];
-		pz1=k_plus[i][2];
-		E1=k_plus[i][3];
-		
-		for(int j=0;j<n;j++){
-			if(j%1000==0) cout<<i<<"\t"<<j<<endl;
-			px2=k_minus[j][0];
-			py2=k_minus[j][1];
-			pz2=k_minus[j][2];
-			E2=k_minus[j][3];
-			E_m=E1+E2;
-			px_m=px1+px2;
-			py_m=py1+py2;
-			pz_m=pz1+pz2;
-			mass->Fill(sqrt(E_m*E_m - px_m*px_m - py_m*py_m - pz_m*pz_m));
-			//cout<<px1<<"\t "<<px2<<"\t "<<endl;
-			//cout<<py1<<" \t"<<py2<<"\t "<<endl;
-			//cout<<pz1<<" \t"<<pz2<<" \t"<<endl;
-			//cout<<E1<<"\t "<<E2<<"\t "<<endl<<endl;
-		}
-	}*/
 
 	mass->Draw();
 	mass->GetXaxis()->SetTitle("Invariant Mass (in GeV)");
 	mass->GetYaxis()->SetTitle("Cross Section");
-	/*canv->cd(0);*/canv->Modified();canv->Update();
-	/*for(int i=0;i<n;i++){
-		delete k_plus[i];
-		delete k_minus[i];
-	}
-	delete[] k_plus;
-	delete[] k_minus;*/
+	canv->Modified();canv->Update();
 }
