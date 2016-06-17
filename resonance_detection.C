@@ -11,7 +11,7 @@ void resonance_detection(){
 
 	TCanvas* canv=new TCanvas("inv_mass","Distribution of invariant mass",900,900);
 
-	TH1F* mass=new TH1F("inv_mass","Invariant Mass",n_bins,0.98,1.05);
+	TH1F* mass=new TH1F("inv_mass","Invariant Mass",n_bins,0.98,1.35);
 	cout<<"number of entries: "<<phi_data->GetEntries()<<endl;
 	int n=(int)((phi_data->GetEntries())/2);
 	//cout<<n<<endl;

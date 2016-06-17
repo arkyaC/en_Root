@@ -10,17 +10,16 @@ void Decay_2particle_toFile(){
 	TRandom3* rndgen=new TRandom3();
 	float ps_rapid,pT;
 	
-	for(int i=0;i<15000;i++){
+	for(int i=0;i<1000;i++){
 		//if(i%1000==0)cout<<i<<endl;
-		int N=(int)(rndgen->Gaus(150.,10.));//number of phi particles
+		int N=(int)(rndgen->Gaus(250.,5.));//number of phi particles
 		if(i%1000==0) cout<<N<<endl;
 		number_of_phi->Fill(i+1,N);
 
-		ps_rapid=rndgen->Gaus(0.,3.);//pseudorapidity (gaussian) of mother
-		pT=0.2+rndgen->Exp(.5);//transverse momentum of mother
+			
 		for(int j=1;j<=N;j++){
-			/*ps_rapid=rndgen->Gaus(0.,3);//pseudorapidity (gaussian) of mother
-			pT=10*(rndgen->Exp(2.));//transverse momentum of mother*/
+			ps_rapid=rndgen->Gaus(0.,3);//pseudorapidity (gaussian) of mother
+			pT=.2+(rndgen->Exp(.5));//transverse momentum of mother	
 			float theta_mother=2*atan(exp(-1*ps_rapid));
 			float p_mother=pT/sin(theta_mother);
 			float E=sqrt(p_mother*p_mother+M*M);
