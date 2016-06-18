@@ -1,9 +1,9 @@
 #define pi 3.141592653589
-#define M 493.7
-#define m1 139.6
-#define m2 139.6
-#define m3 135.0
-#define n 100000
+#define M 939.57
+#define m1 938.28
+#define m2 0.000000320
+#define m3 0.511
+#define n 1000000
 #define n_bins 150
 
 void P3E3plots(){
@@ -26,8 +26,8 @@ void P3E3plots(){
 	float beta_y=py_mother/E;
 	float beta_z=pz_mother/E;
 	int r = 0;
-	TH1F* P3=new TH1F("P3","P3",n_bins,0.,150.);
-	TH1F* e3=new TH1F("e3","e3",n_bins,100.,200.);
+	TH1F* P3=new TH1F("P3","P3",n_bins,0.,1.3);
+	TH1F* e3=new TH1F("e3","e3",n_bins,0.3,1.5);
 	for(int i=0; i<n; i++){
 		float p1=rndgen->Gaus(0,p1max);
 		float phi1=2*pi*rndgen->Uniform(0,1);
@@ -54,7 +54,7 @@ void P3E3plots(){
 		float p3z=(gamma-1)*(p3xcm*beta_x*beta_z/(beta*beta) + p3ycm*beta_y*beta_z/(beta*beta) + p3zcm*beta_z*beta_z/(beta*beta)) + p3zcm + gamma*beta_x*E3cm;
 		float E3=gamma*(E3cm + beta_x*p3xcm + beta_y*p3ycm + beta_z*p3zcm) ;
 		float p3=sqrt((p3x*p3x) + (p3y*p3y) + (p3z*p3z));
-		if(Ediff*Ediff < 50){
+		if(Ediff*Ediff < 0.00001){
 			P3->Fill(p3);
 			e3->Fill(E3);
 			r++;

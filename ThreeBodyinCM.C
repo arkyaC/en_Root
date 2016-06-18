@@ -1,9 +1,9 @@
 #define pi 3.141592653589
-#define M 493.7
-#define m1 139.6
-#define m2 139.6
-#define m3 135.0
-#define n 100000
+#define M 939.57
+#define m1 938.28
+#define m2 0.000000320
+#define m3 0.511
+#define n 1000000
 #define n_bins 150
 
 void ThreeBodyinCM(){
@@ -39,8 +39,8 @@ void ThreeBodyinCM(){
 		float E2=sqrt(p2*p2 + m2*m2);
 		float E3=sqrt(p3*p3 + m3*m3);
 		float Ediff=M-(E1+E2+E3);
-		//cout<<Ediff<<endl;
-		if(Ediff*Ediff < 50){
+		cout<<Ediff<<endl;
+		if(Ediff*Ediff < 0.00001){
 			x12[r]=((E1+E2)*(E1+E2)) - ((p1x+p2x)*(p1x+p2x)) - ((p1y+p2y)*(p1y+p2y)) - ((p1z+p2z)*(p1z+p2z));
 			y23[r]=((E3+E2)*(E3+E2)) - ((p3x+p2x)*(p3x+p2x)) - ((p3y+p2y)*(p3y+p2y)) - ((p3z+p2z)*(p3z+p2z));
 			z13[r]=((E1+E3)*(E1+E3)) - ((p1x+p3x)*(p1x+p3x)) - ((p1y+p3y)*(p1y+p3y)) - ((p1z+p3z)*(p1z+p3z));
@@ -56,20 +56,21 @@ void ThreeBodyinCM(){
 	TGraph* dalitz2=new TGraph(r,x12,z13);
 	TGraph* dalitz3=new TGraph(r,y23,z13);
 	TCanvas* can=new TCanvas("dalitz","dalitz",1500,700);
-	TCanvas* can1=new TCanvas("inv_mass","inv_mass",1500,700);
+	//TCanvas* can1=new TCanvas("inv_mass","inv_mass",1500,700);
 	//TCanvas* can2=new TCanvas("3","3",1500,700);
 	//can2->Divide(2,1);
 	//can2->cd(1);
 	//Mom3->Draw();
 	//can2->cd(2);
 	//Energy3->Draw();
-	can1->Divide(3,1);
+	/*can1->Divide(3,1);
 	can1->cd(1);
 	m12->Draw();
 	can1->cd(2);
 	m23->Draw();
 	can1->cd(3);
 	m13->Draw();
+	*/
 	can->Divide(3,1);
 	can->cd(1);
 	dalitz1->Draw("A*");
