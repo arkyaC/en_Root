@@ -3,7 +3,7 @@
 #define m1 938.28
 #define m2 0.000000320
 #define m3 0.511
-#define n 1000000
+#define n 100000
 #define n_bins 150
 
 void P3E3plots(){
