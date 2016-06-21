@@ -3,7 +3,7 @@
 #define m3 230.33
 #define pi 3.141592653589
 #define n_bins 200
-#define n 1000000
+#define n 100000
 /*void init(TCanvas* canv){
 	canv->Divide(1,3);
 	canv->cd(1);
@@ -126,7 +126,10 @@ void Threebodyviatwobody(){
 		x[i]=(E23)*(E23) - (p23x)*(p23x) - (p23y)*(p23y) - (p23z)*(p23z);
 		y[i]=(E24)*(E24) - (p24x)*(p24x) - (p24y)*(p24y) - (p24z)*(p24z);
 		z[i]=((E3_lab+E4_lab)*(E3_lab+E4_lab)) - ((px3_lab+px4_lab)*(px3_lab+px4_lab)) - ((py3_lab+py4_lab)*(py3_lab+py4_lab)) - ((pz3_lab+pz4_lab)*(pz3_lab+pz4_lab));
-		cout<<px_sum<<"="<<px_mother<<"   ,   "<<py_sum<<"="<<py_mother<<"   ,   "<<pz_sum<<"="<<pz_mother<<"   ,   "<<endl<<endl<<endl;
+		//cout<<px_sum<<"="<<px_mother<<"   ,   "<<py_sum<<"="<<py_mother<<"   ,   "<<pz_sum<<"="<<pz_mother<<"   ,   "<<E1_lab+E2_lab+E3_lab<<endl<<endl;
+		if(i%10000==0){
+			cout<<i<<endl;
+		}
 	}
 	TGraph* dalitz1=new TGraph(n,x,y);
 	TGraph* dalitz2=new TGraph(n,y,z);

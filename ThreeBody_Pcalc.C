@@ -6,7 +6,7 @@
 #define n 100000
 #define n_bins 150
 
-void ThreeBody(){
+void ThreeBody_Pcalc(){
 	TRandom3* rndgen=new TRandom3();
 	TH1F* Mom3=new TH1F("P3","P3",n_bins,0.,1.2);
 	TH1F* Energy3=new TH1F("e3","e3",n_bins,0.3,1.4);
