@@ -1,9 +1,9 @@
-#define M 1.019445
-#define m .493667
-#define m3 .23033
+#define M 1019.445
+#define m 493.667
+#define m3 150.33
 #define pi 3.141592653589
 #define n_bins 200
-#define n 10000
+#define n 1000
 /*void init(TCanvas* canv){
 	canv->Divide(1,3);
 	canv->cd(1);
@@ -39,7 +39,7 @@ void Threebodyviatwobody(){
 	*/
 	TRandom3* rndgen=new TRandom3();
 	float ps_rapid,pT;
-	float x[n],y[n];
+	float x[n],y[n],z[n];
 	
 	for(int i=0;i<n;i++){
 		ps_rapid=rndgen->Gaus(0.,3);
@@ -125,11 +125,20 @@ void Threebodyviatwobody(){
 		float E24=E2_lab + E4_lab;
 		x[i]=(E23)*(E23) - (p23x)*(p23x) - (p23y)*(p23y) - (p23z)*(p23z);
 		y[i]=(E24)*(E24) - (p24x)*(p24x) - (p24y)*(p24y) - (p24z)*(p24z);
+		z[i]=((E3_lab+E4_lab)*(E3_lab+E4_lab)) - ((px3_lab+px4_lab)*(px3_lab+px4_lab)) - ((py3_lab+py4_lab)*(py3_lab+py4_lab)) - ((pz3_lab+pz4_lab)*(pz3_lab+pz4_lab));
 		cout<<px_sum<<"="<<px_mother<<"   ,   "<<py_sum<<"="<<py_mother<<"   ,   "<<pz_sum<<"="<<pz_mother<<"   ,   "<<endl<<endl<<endl;
 	}
-	TGraph* dalitz=new TGraph(1000,x,y);
+	TGraph* dalitz1=new TGraph(n,x,y);
+	TGraph* dalitz2=new TGraph(n,y,z);
+	TGraph* dalitz3=new TGraph(n,x,z);
 	TCanvas* can=new TCanvas("dalitz","dalitz",1500,700);
-	dalitz->Draw("A*");
+	can->Divide(3,1);
+	can->cd(1);
+	dalitz1->Draw("A*");
+	can->cd(2);
+	dalitz2->Draw("A*");
+	can->cd(3);
+	dalitz3->Draw("A*");
 	/*canv1->cd(1);
 	par1_px->Draw();
 	canv1->cd(2);
