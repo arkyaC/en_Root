@@ -1,9 +1,9 @@
 #define pi 3.141592653589
-#define M 493.667
-#define m1 134.9766
-#define m2 134.9766
-#define m3 134.9766
-#define n 200000
+#define M 939.57
+#define m1 938.28
+#define m2 0.000000320
+#define m3 0.511
+#define n 10000000
 #define n_bins 150
 
 void TB(){
@@ -13,7 +13,7 @@ void TB(){
 	//TH1F* m13=new TH1F("m13","m13",n_bins,850000.,900000.);
 	TH1F* Mom3=new TH1F("P3","P3",n_bins,0.,1.2);
 	TH1F* Energy3=new TH1F("e3","e3",n_bins,0.3,1.4);
-	float p1max,p2max;
+	float p1max,p2max,p3max;
 	p1max=sqrt((M*M - ((m1+m2+m3)*(m1+m2+m3)))*(M*M - ((-m1+m2+m3)*(-m1+m2+m3))))/(2*M);
 	p2max=sqrt((M*M - ((m1+m2+m3)*(m1+m2+m3)))*(M*M - ((-m2+m1+m3)*(-m2+m1+m3))))/(2*M);
 	p3max=sqrt((M*M - ((m1+m2+m3)*(m1+m2+m3)))*(M*M - ((-m3+m2+m1)*(-m3+m2+m1))))/(2*M);
@@ -25,7 +25,7 @@ void TB(){
 		float p3=rndgen->Uniform(0,p3max);
 		float Ediff=M-(sqrt(p1*p1 + m1*m1)+sqrt(p2*p2 + m2*m2)+sqrt(p3*p3 + m3*m3));
 		cout<<Ediff<<endl;
-		if(p1+p2>p3 && p2+p3>p1 && p3+p1>p2 && Ediff*Ediff < 10){
+		if(p1+p2>p3 && p2+p3>p1 && p3+p1>p2 && Ediff*Ediff < 0.0001){
 			//cout<<p1x + p2x + p3x<<"  "<<p1y + p2y + p3y<<"  "<<p1z + p2z + p3z<<endl;
 			x12[r]=(M-sqrt(p3*p3+m3*m3))*(M-sqrt(p3*p3+m3*m3)) - p3*p3;
 			y23[r]=(M-sqrt(p1*p1+m1*m1))*(M-sqrt(p1*p1+m1*m1)) - p1*p1;

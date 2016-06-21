@@ -1,9 +1,9 @@
 #define M 1019.445
 #define m 493.667
-#define m3 150.33
+#define m3 230.33
 #define pi 3.141592653589
 #define n_bins 200
-#define n 1000
+#define n 1000000
 /*void init(TCanvas* canv){
 	canv->Divide(1,3);
 	canv->cd(1);
@@ -43,7 +43,7 @@ void Threebodyviatwobody(){
 	
 	for(int i=0;i<n;i++){
 		ps_rapid=rndgen->Gaus(0.,3);
-		pT=0.2 + rndgen->Exp(0.5);
+		pT=200+rndgen->Exp(500);
 		float theta_mother=2*atan(exp(-1*ps_rapid));
 		float p_mother=pT/sin(theta_mother);
 		float E=sqrt(p_mother*p_mother+M*M);
