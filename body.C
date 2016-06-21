@@ -5,13 +5,13 @@
 #define pi 3.141592653589
 void body(){
 	TRandom3 rndgen;
-	const int runs=10000000;
+	const int runs=100000;
 	double arem12[runs],arem23[runs],arem31[runs];
 	int count;
-	double p1max=sqrt((M*M+pow(m1+m2+m3,2))*(M*M-pow(-m1+m2+m3,2)))/(2*M);
-	double p2max=sqrt((M*M+pow(m1+m2+m3,2))*(M*M-pow(m1-m2+m3,2)))/(2*M);
-	TH1F* E3 = new TH1F("E3","E3",150,0.5,2);
-	TH1F* P3 = new TH1F("P3","P3",150,0,2);
+	double p1max=sqrt((M*M-pow(m1+m2+m3,2))*(M*M-pow(-m1+m2+m3,2)))/(2*M);
+	double p2max=sqrt((M*M-pow(m1+m2+m3,2))*(M*M-pow(m1-m2+m3,2)))/(2*M);
+	TH1F* E3 = new TH1F("E3","E3",150,0.5,1.4);
+	TH1F* P3 = new TH1F("P3","P3",150,0,1.2);
 	for(int j=0;j<runs;j++){
 		double p1=rndgen.Uniform(0,p1max);
 		double p2=rndgen.Uniform(0,p2max);
