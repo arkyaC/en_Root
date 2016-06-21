@@ -22,9 +22,9 @@ void twoBodySuccessive(){
 
 	float ps_rapid,pT;
 	
-	for(int i=0;i<1000;i++){
+	for(int i=0;i<10000;i++){
 		//if(i%1000==0)cout<<i<<endl;
-		int N=1;//(int)(rndgen->Gaus(250.,5.));//number of phi particles
+		int N=(int)(rndgen->Gaus(250.,5.));//number of phi particles
 		//if(i%1000==0) cout<<N<<endl;
 			
 		for(int j=1;j<=N;j++){
@@ -109,11 +109,13 @@ void twoBodySuccessive(){
 		    // s1 aka s43
 		    float s43=(pow(E4+E3,2.)-pow(Px4+Px3,2.)-pow(Py4+Py3,2.)-pow(Pz4+Pz3,2.));
 
-		    cout<<Px1+Px3+Px4-px_m<<endl<<endl;
+		    if (i%1000==0)cout<<Px1+Px3+Px4-px_m<<endl<<endl;
 
-		    dalitzPlot41->Fill(s13,s43);
-		    dalitzPlot34->Fill(s14,s13);
-		    dalitzPlot13->Fill(s43,s14);
+		    if(s13>0&&s43>0&&s14>0){
+		    	dalitzPlot41->Fill(s13,s43);		    
+			    dalitzPlot34->Fill(s14,s13);
+		    	dalitzPlot13->Fill(s43,s14);
+			}
 		}
 	}
 
