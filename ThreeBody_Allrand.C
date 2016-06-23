@@ -7,10 +7,6 @@
 #define n_bins 150
 
 void ThreeBody_Allrand(){
-	TRandom3* rndgen=new TRandom3();
-	//TH1F* m12=new TH1F("m12","m12",n_bins,850000.,900000.);
-	//TH1F* m23=new TH1F("m23","m23",n_bins,0.,2.);
-	//TH1F* m13=new TH1F("m13","m13",n_bins,850000.,900000.);
 	TH1F* Mom3=new TH1F("P3","P3",n_bins,0.,1.2);
 	TH1F* Energy3=new TH1F("e3","e3",n_bins,0.3,1.4);
 	float p1max,p2max,p3max;
@@ -26,13 +22,9 @@ void ThreeBody_Allrand(){
 		float Ediff=M-(sqrt(p1*p1 + m1*m1)+sqrt(p2*p2 + m2*m2)+sqrt(p3*p3 + m3*m3));
 		cout<<Ediff<<endl;
 		if(p1+p2>p3 && p2+p3>p1 && p3+p1>p2 && Ediff*Ediff < 0.0001){
-			//cout<<p1x + p2x + p3x<<"  "<<p1y + p2y + p3y<<"  "<<p1z + p2z + p3z<<endl;
 			x12[r]=(M-sqrt(p3*p3+m3*m3))*(M-sqrt(p3*p3+m3*m3)) - p3*p3;
 			y23[r]=(M-sqrt(p1*p1+m1*m1))*(M-sqrt(p1*p1+m1*m1)) - p1*p1;
 			z13[r]=(M-sqrt(p2*p2+m2*m2))*(M-sqrt(p2*p2+m2*m2)) - p2*p2;;
-			//m12->Fill(x12[r]);
-			//m23->Fill(y23[r]);
-			//m13->Fill(z13[r]);
 			Mom3->Fill(p3);
 			Energy3->Fill(sqrt(p3*p3 + m3*m3));
 			r++;
@@ -42,20 +34,12 @@ void ThreeBody_Allrand(){
 	TGraph* dalitz2=new TGraph(r,x12,z13);
 	TGraph* dalitz3=new TGraph(r,y23,z13);
 	TCanvas* can=new TCanvas("dalitz","dalitz",1500,700);
-	//TCanvas* can1=new TCanvas("inv_mass","inv_mass",1500,700);
 	TCanvas* can2=new TCanvas("3","3",1500,700);
 	can2->Divide(2,1);
 	can2->cd(1);
 	Mom3->Draw();
 	can2->cd(2);
 	Energy3->Draw();
-	/*can1->Divide(3,1);
-	can1->cd(1);
-	m12->Draw();
-	can1->cd(2);
-	m23->Draw();
-	can1->cd(3);
-	m13->Draw();*/
 	can->Divide(3,1);
 	can->cd(1);
 	dalitz1->Draw("A*");

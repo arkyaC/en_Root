@@ -21,7 +21,6 @@ void tbody(){
 		float cur1=M-sqrt(p1*p1+m1*m1)-sqrt(p2*p2+m2*m2)-sqrt(p3*p3+m3*m3);
 		cout<<cur1<<endl;
 		if (cur1*cur1<0.00001 && p1+p2>p3 && p2+p3>p1 && p3+p1>p2){
-
 				arem12[count]=pow(M-sqrt(p3*p3+m3*m3),2)-p3*p3;
 				arem23[count]=pow(M-sqrt(p1*p1+m1*m1),2)-p1*p1;
 				arem31[count]=pow(M-sqrt(p2*p2+m2*m2),2)-p2*p2;
