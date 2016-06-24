@@ -93,5 +93,6 @@ void read_ConvDecay(){
 	cout<<bg->Add(mass,-1)<<endl;
 	bg->Scale(-1.,"");
 	bg->Draw();
+	bg->SetTitle("Background removed");
 	gPad->Modified();gPad->Update();
 }
