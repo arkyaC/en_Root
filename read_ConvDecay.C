@@ -1,5 +1,10 @@
-
-#define n_bins 300
+//deconvolution not working
+#define pi 3.141592653589
+#define n_bins 1000
+#define rangeMin 942.
+#define rangeMax 1101.
+#define massMin 0.
+#define massMax 1500.
 
 void read_ConvDecay(){
 	TFile in_file("conv_decay.root");
@@ -16,7 +21,7 @@ void read_ConvDecay(){
 	canv->cd(2);
 	gPad->SetTitle("Background removed");
 
-	TH1F* mass=new TH1F("inv_mass","Invariant Mass (convoluted)",n_bins,0.,1350.);
+	TH1F* mass=new TH1F("inv_mass","Invariant Mass (convoluted)",n_bins,massMin,massMax);
 	cout<<"number of entries: "<<conv_decay->GetEntries()<<endl;
 	int n=(int)((conv_decay->GetEntries())/2);
 	//cout<<n<<endl;
@@ -85,14 +90,79 @@ void read_ConvDecay(){
 
 	canv->cd(1);
 	mass->Draw();
-	mass->GetXaxis()->SetTitle("Invariant Mass (in GeV)");
+	mass->GetXaxis()->SetTitle("Invariant Mass (in MeV)");
 	mass->GetYaxis()->SetTitle("Cross Section");
 	gPad->Modified();gPad->Update();
 	canv->cd(2);
 	TH1* bg=mass->ShowBackground();
 	cout<<bg->Add(mass,-1)<<endl;
 	bg->Scale(-1.,"");
-	bg->Draw();
+	bg->Draw("Same");
 	bg->SetTitle("Background removed");
+	bg->GetXaxis()->SetRangeUser(rangeMin,rangeMax);
+
+	TFitResultPtr r= bg->Fit("gaus","S");
+	double par0=r->Parameter(0);
+	double par1=r->Parameter(1);
+	double par2=r->Parameter(2);
+	TF1* g=new TF1("fitfn","[0]*exp(-0.5*(x-[1])*(x-[1])/([2]*[2]))",rangeMin,rangeMax); //fitted function -to be deconvoluted
+	g->SetParameter(0,par0);
+	g->SetParameter(1,par1);
+	g->SetParameter(2,par2);
+	g->Draw("Same");
 	gPad->Modified();gPad->Update();
+
+	//deconvolution code (with FT)
+	float binWidth = (massMax - massMin)/n_bins;
+	int N=rangeMax-rangeMin;
+	float* obsFT_real=new float[N];
+	float* obsFT_imag=new float[N];
+	float* noiseFT_real= new float[N];
+	float* noiseFT_imag= new float[N];
+	float* realmassFT_real= new float[N];
+	float* realmassFT_imag= new float[N];
+	float* observation= new float[N];
+	float* noise= new float[N];
+	float* realmass= new float[N];
+
+	for(int i=0;i<N;i++){ //initialising obs and noise data points
+		observation[i]=bg->GetBinContent(i+1+(int)(rangeMin/binWidth));
+		noise[i]=g->Eval(rangeMin+binWidth*i);
+	}
+	for(int i=0;i<N;i++){ //evaluating DFT of obs
+		obsFT_real[i]=0.;
+		obsFT_imag[i]=0.;
+		for(int j=0;j<N;j++){
+			obsFT_real[i]+=observation[j] * cos(2*pi*i*j/N);
+			obsFT_imag[i]+=-observation[j] * sin(2*pi*i*j/N);
+		}
+	}
+	for(int i=0;i<N;i++){ //evaluating DFT of noise
+		noiseFT_real[i]=0.;
+		noiseFT_imag[i]=0.;
+		for(int j=0;j<N;j++){
+			noiseFT_real[i]+=noise[j] * cos(2*pi*i*j/N);
+			noiseFT_imag[i]+=-noise[j] * sin(2*pi*i*j/N);
+		}
+	}
+	for(int i=0;i<N;i++){
+		realmassFT_real[i] = (obsFT_real[i]*noiseFT_real[i] + obsFT_imag[i]*noiseFT_imag[i])/(pow(noiseFT_real[i],2)+pow(noiseFT_imag[i],2));
+		realmassFT_imag[i] = (obsFT_imag[i]*noiseFT_real[i] - obsFT_real[i]*noiseFT_imag[i])/(pow(noiseFT_real[i],2)+pow(noiseFT_imag[i],2));
+	}
+	//time for inverse DFT!!!...
+	for(int i=0;i<N;i++){
+		realmass[i]=0.;
+		for(int j=0;j<N;j++){
+			realmass[i]+=realmassFT_real[j] * cos(2*pi*j*i/N) - realmassFT_imag[j] * sin(2*pi*j*i/N);
+		}
+		realmass[i]=realmass[i]/N;
+	}
+
+	TH1F *deconv_mass = new TH1F("deconv_mass","deconvoluted mass",N,rangeMin,rangeMax);
+	for(int i=0;i<N;i++){
+		deconv_mass->Fill(rangeMin+i*binWidth,realmass[i]);
+	}
+	TCanvas* canv1=new TCanvas("deconvoluted_inv_mass","Distribution of deconvoluted invariant mass",900,450);
+	canv1->cd();
+	deconv_mass->Draw();
 }
