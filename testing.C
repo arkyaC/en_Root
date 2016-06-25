@@ -18,12 +18,11 @@ Double_t combination(Double_t *x,Double_t *par){
 	return f->Eval(x[0]);
 }
 void testing(){
-	TF1* d= new TF1("combined",combination,0,2000,5);
+	TF1* d= new TF1("combined",lorrentzian,0,2000,3);
+	can= new TCanvas("a","a",900,900);
 	d->SetParameter(0,1);
-	d->SetParameter(1,4.43);
-	d->SetParameter(2,1019.455);
-	d->SetParameter(3,10);
-	d->SetParameter(4,100);
-	TCanvas* c= new TCanvas("Sagar","Sagar",900,900);
+	d->SetParameter(1,4.4);
+	d->SetParameter(2,1019);
 	d->Draw();
+
 }
